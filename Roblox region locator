@@ -29,7 +29,7 @@ def main():
 
             if pingofserver <= maxping:
                 print("found a very nice server :D ")
-                pyperclip.copy(f"roblox://experiences/start?placeId=70845479499574&gameInstanceId={ServerId}")
+                pyperclip.copy(f"roblox://experiences/start?placeId={id}&gameInstanceId={ServerId}")
                 print("copied to clipboard")
                 print(f"----------------------------------------------------------------------------\n roblox://experiences/start?placeId=70845479499574&gameInstanceId={ServerId}, \n ping: {pingofserver} \n plrs : {playercount} / {totalplayers} ")
 
