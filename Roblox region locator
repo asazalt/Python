@@ -1,0 +1,59 @@
+# this script is open source and free to use, enjoy!
+
+import urllib.request
+import urllib.error
+import time
+import json
+import pyperclip
+
+
+def main():
+ maxattempts = 35
+
+ while maxattempts > 0:
+    #print(maxattempts, "attempts remaining")
+    try:
+
+
+        url = f"https://games.roblox.com/v1/games/{id}/servers/Public?limit=25"
+        opening = urllib.request.urlopen(url)
+        data = json.loads(opening.read().decode())
+        maxattempts -= 1
+        for Server in data["data"]:
+            ServerId = Server["id"]
+            pingofserver = Server["ping"]
+            playercount = Server["playing"]
+            totalplayers = Server["maxPlayers"]
+
+            if pingofserver <= maxping:
+                print("found a very nice server :D ")
+                pyperclip.copy(f"roblox://experiences/start?placeId=70845479499574&gameInstanceId={ServerId}")
+                print("copied to clipboard")
+                print(f"----------------------------------------------------------------------------\n roblox://experiences/start?placeId=70845479499574&gameInstanceId={ServerId}, \n ping: {pingofserver} \n plrs : {playercount} / {totalplayers} ")
+
+
+    except urllib.error.HTTPError as error_code :
+        if error_code.code == 429: #rate limit
+         time.sleep(5)
+         continue
+
+
+        elif error_code.code == 404: # not found
+         print("double check thats the right id")
+         return
+
+
+try:
+        maxping = int(input("input the minimum ping"))  # lower the harder
+        if not maxping:
+            maxping = 35
+except ValueError:
+        maxping = 35 # default val
+
+
+
+try:
+    id = int(input("ID of the game?: "))
+    main()
+except ValueError:
+    print("Invalid ID")
