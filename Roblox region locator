@@ -1,4 +1,4 @@
-# this script is open source and free to use, enjoy!
+#this script is open sourced and you dont need a license since this was quite ez to make
 
 import urllib.request
 import urllib.error
@@ -12,6 +12,7 @@ def main():
 
  while maxattempts > 0:
     #print(maxattempts, "attempts remaining")
+  try:
     try:
 
 
@@ -20,6 +21,7 @@ def main():
         data = json.loads(opening.read().decode())
         maxattempts -= 1
         for Server in data["data"]:
+            time.sleep(0.05)
             ServerId = Server["id"]
             pingofserver = Server["ping"]
             playercount = Server["playing"]
@@ -32,8 +34,9 @@ def main():
                 print(f"----------------------------------------------------------------------------\n roblox://experiences/start?placeId=70845479499574&gameInstanceId={ServerId}, \n ping: {pingofserver} \n plrs : {playercount} / {totalplayers} ")
 
 
-    except urllib.error.HTTPError as error_code :
+    except  urllib.error.HTTPError as error_code  :
         if error_code.code == 429: #rate limit
+         print("rate limited")
          time.sleep(5)
          continue
 
@@ -41,7 +44,9 @@ def main():
         elif error_code.code == 404: # not found
          print("double check thats the right id")
          return
-
+  except KeyboardInterrupt:
+      print("stopping.")
+      return
 
 try:
         maxping = int(input("input the minimum ping"))  # lower the harder
